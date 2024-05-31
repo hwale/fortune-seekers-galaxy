@@ -5,8 +5,6 @@ import loginButtonImg768 from "../../assets/login-button-768.webp";
 import loginButtonImg1024 from "../../assets/login-button-1024.webp";
 import loginButtonImg1280 from "../../assets/login-button-1280.webp";
 import loginButtonImg1536 from "../../assets/login-button-1536.webp";
-import { functions } from "../../firebase";
-import { httpsCallable } from "firebase/functions";
 
 const Login = () => {
   const location = useLocation();
@@ -15,8 +13,6 @@ const Login = () => {
     const code = query.get("code");
     console.log("params", code);
     if (code) {
-      // const login = httpsCallable(functions, 'login')
-      // functions.
     }
   }, [location]);
 

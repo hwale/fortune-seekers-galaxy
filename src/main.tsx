@@ -1,12 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Root from "./routes/root.tsx";
 import "./index.css";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+  },
+]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
-
-// https://hyplay.com/oauth/authorize/?appId=6ac6d7e7-989e-4dac-9765-f29d98cef802&chain=HYCHAIN_TESTNET&responseType=token&redirectUri=https://fortune-seekers-galaxy.web.app/

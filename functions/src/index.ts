@@ -2,6 +2,7 @@ import * as functions from 'firebase-functions';
 import * as crypto from 'crypto';
 import cookieParser from 'cookie-parser';
 import express from 'express';
+import cors from 'cors';
 import { grantSessionToken } from './hyplay';
 import {
   GrantSessionTokenRequest,
@@ -17,6 +18,38 @@ const ENCRYPTION_KEY = functions.config().encryption.key; // Must be 32 bytes fo
 const app = express();
 app.use(cookieParser());
 app.use(express.json());
+
+// CORS configuration
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://fortune-seekers-galaxy.web.app',
+];
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin) {
+        // Reject requests with no origin
+        return callback(
+          new Error(
+            'The CORS policy for this site does not allow access from the specified origin.',
+          ),
+          false,
+        );
+      }
+      if (allowedOrigins.indexOf(origin) === -1) {
+        // Reject requests from disallowed origins
+        return callback(
+          new Error(
+            'The CORS policy for this site does not allow access from the specified origin.',
+          ),
+          false,
+        );
+      }
+      // Allow requests from allowed origins
+      return callback(null, true);
+    },
+  }),
+);
 
 const encrypt = (text: string): string => {
   const iv = crypto.randomBytes(16);
@@ -63,7 +96,7 @@ app.post('/login', async (req, res) => {
 
     res.cookie('access_token', encryptedToken, {
       httpOnly: true,
-      secure: true,
+      // secure: true,
       maxAge: maxAge,
     });
 

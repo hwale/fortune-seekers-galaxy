@@ -48,6 +48,7 @@ app.use(
       // Allow requests from allowed origins
       return callback(null, true);
     },
+    credentials: true,
   }),
 );
 

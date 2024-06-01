@@ -11,7 +11,7 @@ const Root = () => {
     if (parts.length === 2) {
       setAccessToken(parts.pop()?.split(";").shift());
     }
-  });
+  }, []);
 
   console.log("access token", accessToken);
 

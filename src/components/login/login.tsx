@@ -22,7 +22,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen min-w-screen bg-[#130e18]">
+    <div className="flex items-center justify-center min-w-[640px] min-h-[480px] bg-[#130e18]">
       <div className="bg-login flex items-center justify-center">
         <button
           type="button"

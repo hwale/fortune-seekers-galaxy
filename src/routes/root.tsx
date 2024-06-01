@@ -14,7 +14,7 @@ const Root = () => {
 
   if (status === "success") return <div>Logged In</div>;
 
-  return <div>You don't belong here</div>;
+  return <div>Checking Auth...</div>;
 };
 
 export default Root;

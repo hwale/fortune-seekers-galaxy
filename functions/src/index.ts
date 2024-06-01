@@ -64,19 +64,19 @@ const encrypt = (text: string): string => {
   return iv.toString('hex') + ':' + encrypted.toString('hex');
 };
 
-// const decrypt = (text: string): string => {
-//   const textParts = text.split(':');
-//   const iv = Buffer.from(textParts.shift() as string, 'hex');
-//   const encryptedText = Buffer.from(textParts.join(':'), 'hex');
-//   const decipher = crypto.createDecipheriv(
-//     'aes-256-cbc',
-//     Buffer.from(ENCRYPTION_KEY, 'hex'),
-//     iv,
-//   );
-//   let decrypted = decipher.update(encryptedText);
-//   decrypted = Buffer.concat([decrypted, decipher.final()]);
-//   return decrypted.toString();
-// };
+const decrypt = (text: string): string => {
+  const textParts = text.split(':');
+  const iv = Buffer.from(textParts.shift() as string, 'hex');
+  const encryptedText = Buffer.from(textParts.join(':'), 'hex');
+  const decipher = crypto.createDecipheriv(
+    'aes-256-cbc',
+    Buffer.from(ENCRYPTION_KEY, 'hex'),
+    iv,
+  );
+  let decrypted = decipher.update(encryptedText);
+  decrypted = Buffer.concat([decrypted, decipher.final()]);
+  return decrypted.toString();
+};
 
 app.post('/login', async (req, res) => {
   const exchangeCode = req.body.exchangeCode as string;
@@ -108,7 +108,7 @@ app.get('/check-auth', async (req, res) => {
   const { accessToken } = req.cookies;
 
   try {
-    const params = { accessToken };
+    const params = { accessToken: decrypt(accessToken) };
     const response = await getCurrentUser(params);
 
     if (response.status === 200) {

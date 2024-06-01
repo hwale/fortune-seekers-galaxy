@@ -23,6 +23,7 @@ export namespace FortuneSeekersAPI {
                 console.log("data", data);
               } catch (error) {}
             },
+            withCredentials: true,
           }
         );
       };

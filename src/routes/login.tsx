@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FortuneSeekersAPI } from "../api";
-import loginButtonImg640 from "../../assets/login-button-640.webp";
-import loginButtonImg768 from "../../assets/login-button-768.webp";
-import loginButtonImg1024 from "../../assets/login-button-1024.webp";
-import loginButtonImg1280 from "../../assets/login-button-1280.webp";
-import loginButtonImg1536 from "../../assets/login-button-1536.webp";
+import loginButtonImg640 from "../assets/login-button-640.webp";
+import loginButtonImg768 from "../assets/login-button-768.webp";
+import loginButtonImg1024 from "../assets/login-button-1024.webp";
+import loginButtonImg1280 from "../assets/login-button-1280.webp";
+import loginButtonImg1536 from "../assets/login-button-1536.webp";
 
 const Login = () => {
   const location = useLocation();

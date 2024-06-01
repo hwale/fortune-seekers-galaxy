@@ -3,7 +3,7 @@ import * as crypto from 'crypto';
 import cookieParser from 'cookie-parser';
 import express from 'express';
 import cors from 'cors';
-import { grantSessionToken } from './hyplay';
+import { getCurrentUser, grantSessionToken } from './hyplay';
 import {
   GrantSessionTokenRequest,
   GrantSessionTokenResponse,
@@ -101,6 +101,23 @@ app.post('/login', async (req, res) => {
     return res.status(200).send('Successfully logged in');
   } catch (error) {
     return res.status(500).send({ message: 'Token exchange failed', error });
+  }
+});
+
+app.get('/check-auth', async (req, res) => {
+  const { accessToken } = req.cookies;
+
+  try {
+    const params = { accessToken };
+    const response = await getCurrentUser(params);
+
+    if (response.status === 200) {
+      return res.status(200).send('Successfully authenticated user');
+    } else {
+      return res.status(400).send('User needs to log in');
+    }
+  } catch (error) {
+    return res.status(500).send({ message: 'Check auth failed', error });
   }
 });
 

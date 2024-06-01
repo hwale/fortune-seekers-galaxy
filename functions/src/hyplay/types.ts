@@ -1,5 +1,3 @@
-// types.ts
-
 export interface GetAppStateRequest {
   key?: string;
 }
@@ -28,9 +26,15 @@ export interface SetAppStateResponse {
   privateState: State;
 }
 
-export type GetUserStateRequest = GetAppStateRequest;
+export interface GetUserStateRequest extends GetAppStateRequest {
+  accessToken: string;
+}
+export interface SetUserStateRequest {
+  data: SetAppStateRequest;
+  accessToken: string;
+}
+
 export type GetUserStateResponse = GetAppStateResponse;
-export type SetUserStateRequest = SetAppStateRequest;
 export type SetUserStateResponse = SetAppStateResponse;
 
 export interface GrantSessionTokenRequest {
@@ -57,3 +61,40 @@ export interface GrantSessionTokenResponse {
   updatedAt: string;
   createdAt: string;
 }
+
+export interface Wallet {
+  id: string;
+  type: string;
+  address: string;
+  authorityCiphertext: string;
+  authorityBackupCiphertexts: Record<string, unknown>;
+  authorityProofSignature: string;
+  backupQuestions: Record<string, unknown>;
+  updatedAt: string;
+  createdAt: string;
+}
+
+export interface User {
+  id: string;
+  walletId: string;
+  username: string;
+  email: string;
+  phone: string;
+  discordId: string;
+  facebookId: string;
+  googleId: string;
+  microsoftId: string;
+  twitterId: string;
+  accessToken: string;
+  isChild: boolean;
+  accessTokenExpiresAt: string;
+  updatedAt: string;
+  createdAt: string;
+  wallet: Wallet;
+}
+
+export interface GetCurrentUserRequest {
+  accessToken: string;
+}
+
+export type GetCurrentUserResponse = User;

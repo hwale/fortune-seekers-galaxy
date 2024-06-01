@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
 
 const FORTUNE_SEEKERS_API_URL =
@@ -11,7 +11,8 @@ export namespace FortuneSeekersAPI {
         exchangeCode: string;
       }
     }
-    export namespace HTTPRequests {
+
+    export namespace HttpRequests {
       export const login = async (data: Types.LoginRequest) => {
         const url = `${FORTUNE_SEEKERS_API_URL}/login`;
         return axios.post<string, AxiosResponse<string>, Types.LoginRequest>(
@@ -27,10 +28,26 @@ export namespace FortuneSeekersAPI {
           }
         );
       };
+
+      export const checkAuth = async () => {
+        const url = `${FORTUNE_SEEKERS_API_URL}/check-auth`;
+        return axios.get<string, AxiosResponse<string>>(url, {
+          withCredentials: true,
+        });
+      };
     }
+
     export namespace Hooks {
       export const useLogin = () => {
-        return useMutation({ mutationFn: HTTPRequests.login });
+        return useMutation({ mutationFn: HttpRequests.login });
+      };
+
+      export const useCheckAuth = () => {
+        return useQuery({
+          queryKey: ["auth", "check-auth"],
+          queryFn: HttpRequests.checkAuth,
+          select: (data) => data.data,
+        });
       };
     }
   }

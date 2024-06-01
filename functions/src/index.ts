@@ -105,7 +105,7 @@ app.post('/login', async (req, res) => {
 });
 
 app.get('/check-auth', async (req, res) => {
-  const { accessToken } = req.cookies;
+  const { access_token: accessToken } = req.cookies;
 
   try {
     const params = { accessToken: decrypt(accessToken) };

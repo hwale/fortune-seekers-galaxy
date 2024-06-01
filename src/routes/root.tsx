@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
-import Login from "../components/login/login";
+import Login from "./login";
+import { useNavigate } from "react-router-dom";
 
 const Root = () => {
   const [accessToken, setAccessToken] = useState<string | undefined>(undefined);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const value = `; ${document.cookie}`;
     const parts = value.split("; access_token=");
-    console.log("document cookie", document.cookie);
+
     if (parts.length === 2) {
       setAccessToken(parts.pop()?.split(";").shift());
+    } else {
+      navigate("/login");
     }
   }, []);
 

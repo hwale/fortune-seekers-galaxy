@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { FortuneSeekersAPI } from "../../api";
+import { useLocation, useNavigate } from "react-router-dom";
+import { FortuneSeekersAPI } from "../api";
 import loginButtonImg640 from "../../assets/login-button-640.webp";
 import loginButtonImg768 from "../../assets/login-button-768.webp";
 import loginButtonImg1024 from "../../assets/login-button-1024.webp";
@@ -11,6 +11,7 @@ const Login = () => {
   const location = useLocation();
   const { mutate: login, status: loginStatus } =
     FortuneSeekersAPI.Auth.Hooks.useLogin();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
@@ -18,6 +19,10 @@ const Login = () => {
 
     if (code && loginStatus === "idle") {
       login({ exchangeCode: code });
+    }
+
+    if (loginStatus === "success") {
+      navigate("/");
     }
   }, [location, login, loginStatus]);
 

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { FortuneSeekersAPI } from "../../api";
 import loginButtonImg640 from "../../assets/login-button-640.webp";
 import loginButtonImg768 from "../../assets/login-button-768.webp";
 import loginButtonImg1024 from "../../assets/login-button-1024.webp";
@@ -8,17 +9,23 @@ import loginButtonImg1536 from "../../assets/login-button-1536.webp";
 
 const Login = () => {
   const location = useLocation();
+  const { mutate: login, status: loginStatus } =
+    FortuneSeekersAPI.Auth.Hooks.useLogin();
+
   useEffect(() => {
     const query = new URLSearchParams(location.search);
     const code = query.get("code");
-    console.log("params", code);
-    if (code) {
+
+    if (code && loginStatus === "idle") {
+      login({ exchangeCode: code });
     }
-  }, [location]);
+  }, [location, login, loginStatus]);
 
   const onLoginClick = () => {
-    window.location.href =
-      "https://hyplay.com/oauth/authorize/?appId=6ac6d7e7-989e-4dac-9765-f29d98cef802&chain=HYCHAIN_TESTNET&responseType=code&redirectUri=https://fortune-seekers-galaxy.web.app/";
+    const { protocol, hostname, port } = window.location;
+    const baseUrl = `${protocol}//${hostname}${port ? `:${port}` : ""}/`;
+
+    window.location.href = `https://hyplay.com/oauth/authorize/?appId=6ac6d7e7-989e-4dac-9765-f29d98cef802&chain=HYCHAIN_TESTNET&responseType=code&redirectUri=${baseUrl}`;
   };
 
   return (

@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 const FORTUNE_SEEKERS_API_URL =
   "https://us-central1-fortune-seekers-galaxy.cloudfunctions.net/api";
@@ -14,11 +14,21 @@ export namespace FortuneSeekersAPI {
     export namespace HTTPRequests {
       export const login = async (data: Types.LoginRequest) => {
         const url = `${FORTUNE_SEEKERS_API_URL}/login`;
-        return axios.post(url, data);
+        return axios.post<string, AxiosResponse<string>, Types.LoginRequest>(
+          url,
+          data,
+          {
+            transformResponse: (data) => {
+              try {
+                console.log("data", data);
+              } catch (error) {}
+            },
+          }
+        );
       };
     }
     export namespace Hooks {
-      export const useLogin = async () => {
+      export const useLogin = () => {
         return useMutation({ mutationFn: HTTPRequests.login });
       };
     }

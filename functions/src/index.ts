@@ -90,14 +90,11 @@ app.post('/login', async (req, res) => {
       response.data as GrantSessionTokenResponse;
     const encryptedToken = encrypt(accessToken);
 
-    const currentTime = new Date().getTime();
-    const expiresAtTime = new Date(expiresAt).getTime();
-    const maxAge = expiresAtTime - currentTime; // Difference in milliseconds
-
     res.cookie('access_token', encryptedToken, {
       httpOnly: true,
-      // secure: true,
-      maxAge: maxAge,
+      secure: true,
+      expires: new Date(expiresAt),
+      sameSite: 'none',
     });
 
     return res.status(200).send('Successfully logged in');

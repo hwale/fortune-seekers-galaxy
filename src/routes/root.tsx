@@ -7,7 +7,7 @@ const Root = () => {
   useEffect(() => {
     const value = `; ${document.cookie}`;
     const parts = value.split("; access_token=");
-
+    console.log("document cookie", document.cookie);
     if (parts.length === 2) {
       setAccessToken(parts.pop()?.split(";").shift());
     }

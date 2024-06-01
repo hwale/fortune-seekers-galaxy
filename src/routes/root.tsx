@@ -10,7 +10,7 @@ const Root = () => {
     if (status === "error") {
       navigate("/login");
     }
-  }, [status]);
+  }, [status, navigate]);
 
   if (status === "success") return <div>Logged In</div>;
 

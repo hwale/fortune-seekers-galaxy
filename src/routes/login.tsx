@@ -28,9 +28,9 @@ const Login = () => {
 
   const onLoginClick = () => {
     const { protocol, hostname, port } = window.location;
-    const baseUrl = `${protocol}//${hostname}${port ? `:${port}` : ""}/`;
+    const loginUrl = `${protocol}//${hostname}${port ? `:${port}` : ""}/login`;
 
-    window.location.href = `https://hyplay.com/oauth/authorize/?appId=6ac6d7e7-989e-4dac-9765-f29d98cef802&chain=HYCHAIN_TESTNET&responseType=code&redirectUri=${baseUrl}`;
+    window.location.href = `https://hyplay.com/oauth/authorize/?appId=6ac6d7e7-989e-4dac-9765-f29d98cef802&chain=HYCHAIN_TESTNET&responseType=code&redirectUri=${loginUrl}`;
   };
 
   return (
